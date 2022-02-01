@@ -1,6 +1,6 @@
 #' Corwin-Schultz Estimator
 #'
-#' @param x \code{xts} object with columns \code{High}, \code{Low}, \code{Close}, representing HLC prices.
+#' @param x \code{xts} object with columns named \code{High}, \code{Low}, \code{Close}, representing HLC prices.
 #' @param width integer width of the rolling window to use, or vector of endpoints defining the intervals to use.
 #' @param method one of \code{"CS"}, \code{"CS2"}.
 #' @param na.rm a \code{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds.
@@ -23,18 +23,18 @@ CS <- function(x, width = nrow(x), method = "CS", na.rm = FALSE, trim = 0){
                  paste(ko, collapse = "', '"), paste(ok, collapse = "', '")))
 
   # prices at time t-1
-  C1 <- lag(x$Close, 1)
-  H1 <- lag(x$High, 1)
-  L1 <- lag(x$Low, 1)
+  C1 <- lag(x$CLOSE, 1)
+  H1 <- lag(x$HIGH, 1)
+  L1 <- lag(x$LOW, 1)
 
   # prices at time t
-  H2 <- x$High
-  L2 <- x$Low
+  H2 <- x$HIGH
+  L2 <- x$LOW
 
   # adjusted prices at time t
-  x$Gap <- pmax(0, C1-H2) + pmin(0, C1-L2)
-  AH2 <- H2 + x$Gap
-  AL2 <- L2 + x$Gap
+  x$GAP <- pmax(0, C1-H2) + pmin(0, C1-L2)
+  AH2 <- H2 + x$GAP
+  AL2 <- L2 + x$GAP
 
   # compute beta
   B <- rsum(log(H2/L2)^2, width = 2, na.rm = na.rm)

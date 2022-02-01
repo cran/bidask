@@ -7,7 +7,7 @@
 AR(x, width = nrow(x), method = "AR", na.rm = FALSE, trim = 0)
 }
 \arguments{
-\item{x}{\code{xts} object with columns \code{High}, \code{Low}, \code{Close}, representing HLC prices.}
+\item{x}{\code{xts} object with columns named \code{High}, \code{Low}, \code{Close}, representing HLC prices.}
 
 \item{width}{integer width of the rolling window to use, or vector of endpoints defining the intervals to use.}
 

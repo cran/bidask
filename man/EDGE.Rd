@@ -7,7 +7,7 @@
 EDGE(x, width = nrow(x), probs = c(0.025, 0.975), na.rm = FALSE, trim = 0)
 }
 \arguments{
-\item{x}{\code{xts} object with columns \code{Open}, \code{High}, \code{Low}, \code{Close}, representing OHLC prices.}
+\item{x}{\code{xts} object with columns named \code{Open}, \code{High}, \code{Low}, \code{Close}, representing OHLC prices.}
 
 \item{width}{integer width of the rolling window to use, or vector of endpoints defining the intervals to use.}
 

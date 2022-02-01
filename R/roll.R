@@ -1,6 +1,6 @@
 #' Roll Estimator
 #'
-#' @param x \code{xts} object with the column \code{Close}, representing closing prices.
+#' @param x \code{xts} object with a column named \code{Close}, representing closing prices.
 #' @param width integer width of the rolling window to use, or vector of endpoints defining the intervals to use.
 #' @param na.rm a \code{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds.
 #' @param trim the fraction (0 to 0.5) of observations to be trimmed from each end before the spread is computed. Values of trim outside that range are taken as the nearest endpoint.
@@ -13,10 +13,10 @@
 #'
 #' @keywords internal
 #'
-Roll <- function(x, width = nrow(x), na.rm = FALSE, trim = 0){
+ROLL <- function(x, width = nrow(x), na.rm = FALSE, trim = 0){
 
   # compute returns
-  R1 <- x$Close/lag(x$Close, 1) - 1
+  R1 <- x$CLOSE/lag(x$CLOSE, 1) - 1
   R2 <- lag(R1, 1)
 
   # drop leading NA
@@ -33,7 +33,7 @@ Roll <- function(x, width = nrow(x), na.rm = FALSE, trim = 0){
   s[] <- 2*sqrt(pmax(0, s))
 
   # set names
-  colnames(s) <- "Roll"
+  colnames(s) <- "ROLL"
 
   # return
   return(s)

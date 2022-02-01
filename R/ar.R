@@ -1,6 +1,6 @@
 #' Abdi-Ranaldo Estimator
 #'
-#' @param x \code{xts} object with columns \code{High}, \code{Low}, \code{Close}, representing HLC prices.
+#' @param x \code{xts} object with columns named \code{High}, \code{Low}, \code{Close}, representing HLC prices.
 #' @param width integer width of the rolling window to use, or vector of endpoints defining the intervals to use.
 #' @param method one of \code{"AR"}, \code{"AR2"}.
 #' @param na.rm a \code{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds.
@@ -26,9 +26,9 @@ AR <- function(x, width = nrow(x), method = "AR", na.rm = FALSE, trim = 0){
   x <- log(x)
 
   # compute mid prices
-  M2 <- (x$High+x$Low)/2
+  M2 <- (x$HIGH+x$LOW)/2
   M1 <- lag(M2, 1)[-1,]
-  C1 <- lag(x$Close, 1)
+  C1 <- lag(x$CLOSE, 1)
 
   # compute square spreads
   S2 <- 4*(C1-M1)*(C1-M2)

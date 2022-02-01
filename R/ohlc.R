@@ -1,6 +1,6 @@
 #' OHLC Estimators
 #'
-#' @param x \code{xts} object with columns \code{Open}, \code{High}, \code{Low}, \code{Close}, representing OHLC prices.
+#' @param x \code{xts} object with columns named \code{Open}, \code{High}, \code{Low}, \code{Close}, representing OHLC prices.
 #' @param width integer width of the rolling window to use, or vector of endpoints defining the intervals to use.
 #' @param method one of \code{"O"}, \code{"OC"}, \code{"OHL"}, \code{"OHLC"}, \code{"C"}, \code{"CO"}, \code{"CHL"}, \code{"CHLO"}, or any combination of them, e.g. \code{"OHLC.CHLO"}.
 #' @param na.rm a \code{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds.
@@ -30,18 +30,18 @@ OHLC <- function(x, width = nrow(x), method = "OHLC.CHLO", na.rm = FALSE, trim =
 
   # prices
   if("O" %in% p){
-    O <- x$Open
+    O <- x$OPEN
     O1 <- lag(O, 1)[-1]
     O2 <- lag(O1,1)[-1]
   }
   if("C" %in% p){
-    C <- x$Close
+    C <- x$CLOSE
     C1 <- lag(C, 1)[-1]
     C2 <- lag(C1,1)[-1]
   }
   if("H" %in% p & "L" %in% p){
-    H <- x$High
-    L <- x$Low
+    H <- x$HIGH
+    L <- x$LOW
     M <- (H+L)/2
     H1 <- lag(H, 1)[-1]
     L1 <- lag(L, 1)[-1]

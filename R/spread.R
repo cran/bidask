@@ -4,19 +4,20 @@
 #'
 #' @details
 #' The method \code{EDGE} implements the Efficient Discrete Generalized Estimator proposed in Ardia-Guidotti-Kroencke (2021).
-#' This is an optimal combination of the OHLC methods when full OHLC price data are available.
-#' The OHLC methods implement the generalized estimators proposed in Ardia-Guidotti-Kroencke (2021).
-#' These estimators can be combined by concatenating their identifiers, e.g., \code{OHLC.CHLO} uses an average of the \code{OHLC} and \code{CHLO} estimators.
+#' 
+#' The methods \code{O}, \code{OC}, \code{OHL}, \code{OHLC}, \code{C}, \code{CO}, \code{CHL}, \code{CHLO} implement the generalized estimators described in Ardia-Guidotti-Kroencke (2021).
+#' They can be combined by concatenating their identifiers, e.g., \code{OHLC.CHLO} uses an average of the \code{OHLC} and \code{CHLO} estimators.
+#' The method \code{GMM} combines the 8 OHLC estimators with the Generalized Method of Moments.
 #'
 #' The method \code{AR} implements the estimator proposed in Abdi & Ranaldo (2017). \code{AR2} implements the 2-period adjusted version.
 #'
-#' The method \code{CS} implements the estimator proposed in Corwin & Schultz (2012). \code{CS2} implements the 2-period adjusted version. Both versions are adjusted for overnight returns as described in the original paper.
+#' The method \code{CS} implements the estimator proposed in Corwin & Schultz (2012). \code{CS2} implements the 2-period adjusted version. Both versions are adjusted for overnight returns as described in the paper.
 #'
-#' The method \code{Roll} implements the estimator proposed in Roll (1984).
+#' The method \code{ROLL} implements the estimator proposed in Roll (1984).
 #'
-#' @param x \code{xts} object with columns \code{Open}, \code{High}, \code{Low}, \code{Close}, representing OHLC prices.
+#' @param x \code{xts} object with columns named \code{Open}, \code{High}, \code{Low}, \code{Close}, representing OHLC prices.
 #' @param width integer width of the rolling window to use, or vector of endpoints defining the intervals to use. By default, the whole time series is used to compute a single spread estimate.
-#' @param method the estimator(s) to use. Choose one or more of: \code{EDGE}, \code{AR}, \code{AR2}, \code{CS}, \code{CS2}, \code{Roll}, \code{O}, \code{OC}, \code{OHL}, \code{OHLC}, \code{C}, \code{CO}, \code{CHL}, \code{CHLO}, or any combination of the OHLC methods, e.g. \code{OHLC.CHLO}. See details.
+#' @param method the estimator(s) to use. Choose one or more of: \code{EDGE}, \code{AR}, \code{AR2}, \code{CS}, \code{CS2}, \code{ROLL}, \code{O}, \code{OC}, \code{OHL}, \code{OHLC}, \code{C}, \code{CO}, \code{CHL}, \code{CHLO}, or \code{GMM}. See details.
 #' @param probs vector of probabilities to compute the critical values when the method \code{EDGE} is selected. By default, the critical values at 2.5\% and 97.5\% are computed.
 #' @param na.rm a \code{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds.
 #' @param trim the fraction (0 to 0.5) of observations to be trimmed from each end before the spread is computed. Values of trim outside that range are taken as the nearest endpoint.
@@ -54,7 +55,7 @@
 #' spread(x, probs = c(0.05, 0.95))
 #'
 #' # use multiple estimators
-#' spread(x, method = c("EDGE", "AR", "CS", "Roll", "OHLC", "OHL.CHL"))
+#' spread(x, method = c("EDGE", "AR", "CS", "ROLL", "OHLC", "OHL.CHL", "GMM"))
 #'
 #' @export
 #'
@@ -63,19 +64,21 @@ spread <- function(x, width = nrow(x), method = "EDGE", probs = c(0.025, 0.975),
   if(!is.xts(x))
     stop("x must be a xts object")
 
-  colnames(x) <- gsub("^(.*\\b)(Open|High|Low|Close)$", "\\2", colnames(x))
+  method <- toupper(method)
+  colnames(x) <- toupper(gsub("^(.*\\b)(Open|High|Low|Close)$", "\\2", colnames(x)))
 
   S <- NULL
+  x <- x[,intersect(colnames(x), c("OPEN", "HIGH", "LOW", "CLOSE"))]
 
   m <- "EDGE"
   if(m %in% method){
     S <- cbind(S, EDGE(x, width = width, probs = probs, na.rm = na.rm, trim = trim))
     method <- setdiff(method, m)
   }
-
-  m <- "Roll"
+  
+  m <- "GMM"
   if(m %in% method){
-    S <- cbind(S, Roll(x, width = width, na.rm = na.rm, trim = trim))
+    S <- cbind(S, GMM(x, width = width, na.rm = na.rm))
     method <- setdiff(method, m)
   }
 
@@ -93,6 +96,12 @@ spread <- function(x, width = nrow(x), method = "EDGE", probs = c(0.025, 0.975),
     method <- setdiff(method, m)
   }
 
+  m <- "ROLL"
+  if(m %in% method){
+    S <- cbind(S, ROLL(x, width = width, na.rm = na.rm, trim = trim))
+    method <- setdiff(method, m)
+  }
+  
   if(length(method)){
     S <- cbind(S, OHLC(x, width = width, method = method, na.rm = na.rm, trim = trim))
   }

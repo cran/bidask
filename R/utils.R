@@ -29,3 +29,14 @@ rmean <- function(x, width, na.rm = FALSE, trim = 0){
   return(zoo::rollmeanr(x, k = width, na.rm = na.rm))
 
 }
+
+#' Rolling apply
+#' @keywords internal
+rapply <- function(x, width, FUN, by.column, ...){
+  
+  if(length(width) > 1)
+    return(xts::period.apply(x, INDEX = width[width>=0], FUN = FUN, ...))
+  
+  return(zoo::rollapplyr(x, width = width, by.column = by.column, FUN = FUN, ...)[-(1:(width-1)),])
+  
+}
