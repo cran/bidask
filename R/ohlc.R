@@ -62,7 +62,7 @@ OHLC <- function(x, width = nrow(x), method = "OHLC.CHLO", na.rm = FALSE, trim =
   if("OHL" %in% m | "OHLC" %in% m)
     v.ohl <- rmean((O==H)/2 + (O==L)/2, width = width, na.rm = na.rm)
   if("CHL" %in% m | "CHLO" %in% m)
-    v.chl <- rmean((C==H)/2 + (C==L)/2, width = width, na.rm = na.rm)
+    v.chl <- rmean((C1==H1)/2 + (C1==L1)/2, width = width-1, na.rm = na.rm)
 
   # open estimators
   if("O" %in% m)

@@ -2,7 +2,7 @@ Package: bidask
 Type: Package
 Title: Efficient Estimation of Bid-Ask Spreads from Open, High, Low,
         and Close Prices
-Version: 0.1.1
+Version: 1.0.0
 Authors@R: c(
     person(given = "Emanuele", family = "Guidotti", email = "emanuele.guidotti@unine.ch", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8961-6623")),
     person(given = "David", family = "Ardia", role = c("ctb"), comment = c(ORCID = "0000-0003-2823-782X")),
@@ -15,15 +15,16 @@ Description: Implements an efficient estimation procedure of bid-ask spreads fro
   Corwin-Schultz (2012) <doi:10.1111/j.1540-6261.2012.01729.x>,
   and Abdi-Ranaldo (2017) <doi:10.1093/rfs/hhx084>.
 License: GPL-3
+URL: https://github.com/eguidotti/bidask
+BugReports: https://github.com/eguidotti/bidask/issues
 Encoding: UTF-8
-Depends: xts
-Imports: zoo
+Imports: xts, zoo
 RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2022-02-01 18:49:54 UTC; Emanuele
+Packaged: 2022-05-10 20:28:52 UTC; eguidotti
 Author: Emanuele Guidotti [aut, cre] (<https://orcid.org/0000-0002-8961-6623>),
   David Ardia [ctb] (<https://orcid.org/0000-0003-2823-782X>),
   Tim Kroencke [ctb] (<https://orcid.org/0000-0001-8700-356X>)
 Maintainer: Emanuele Guidotti <emanuele.guidotti@unine.ch>
 Repository: CRAN
-Date/Publication: 2022-02-01 19:00:11 UTC
+Date/Publication: 2022-05-10 22:10:02 UTC
