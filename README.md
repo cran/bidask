@@ -1,6 +1,7 @@
 # Efficient Estimation of Bid-Ask Spreads from Open, High, Low, and Close Prices
 
-Implements an efficient estimation procedure of the bid-ask spread from Open, High, Low, and Close prices as proposed in Ardia, Guidotti, Kroencke (2021): https://www.ssrn.com/abstract=3892335
+Implements an efficient estimator of bid-ask spreads from open, high, low, and close 
+prices as described in [Ardia, Guidotti, & Kroencke (2021)](https://www.ssrn.com/abstract=3892335).
 
 ## Installation
 
@@ -18,54 +19,36 @@ Load the library:
 library("bidask")
 ```
 
-Simulate a price process with spread 1%
+Arguments:
 
 ```R
-x <- sim(spread = 0.01)
+edge(open, high, low, close, sign=FALSE)
 ```
 
-Estimate the spread
+| field   | description                                 |
+| ------- | ------------------------------------------- |
+| `open`  | Numeric vector of open prices               |
+| `high`  | Numeric vector of high prices               |
+| `low`   | Numeric vector of low prices                |
+| `close` | Numeric vector of close prices              |
+| `sign`  | Whether signed estimates should be returned |
 
-```r
-edge(x$Open, x$High, x$Low, x$Close)
+The input prices must be sorted in ascending order of the timestamp.
+
+The output value is the spread estimate. A value of 0.01 corresponds to a spread of 1%.
+
+## Example
+
+```R
+library("bidask")
+
+df = read.csv("https://raw.githubusercontent.com/eguidotti/bidask/main/pseudocode/ohlc.csv")
+edge(df$Open, df$High, df$Low, df$Close)
 ```
-
-By default this is equivalent to
-
-```r
-spread(x)
-```
-
-Use a rolling window of 21 periods
-
-```r
-spread(x, width = 21)
-```
-
-Compute the spread for each month
-
-```r
-ep <- xts::endpoints(x, on = "months")
-spread(x, width = ep)
-```
-
-Compute the critical values at 5% and 95%
-
-```r
-spread(x, probs = c(0.05, 0.95))
-```
-
-Use multiple estimators
-
-```r
-spread(x, method = c("EDGE", "AR", "CS", "ROLL", "OHLC", "OHL.CHL", "GMM"))
-```
-
-Full documentation available on [CRAN](https://cran.r-project.org/package=bidask/bidask.pdf)
 
 ## Cite as
 
-*Ardia, David and Guidotti, Emanuele and Kroencke, Tim Alexander, "Efficient Estimation of Bid-Ask Spreads from Open, High, Low, and Close Prices". Available at SSRN: https://ssrn.com/abstract=3892335*
+*Ardia, David and Guidotti, Emanuele and Kroencke, Tim Alexander, "Efficient Estimation of Bid-Ask Spreads from Open, High, Low, and Close Prices". Available at SSRN: https://www.ssrn.com/abstract=3892335* 
 
 A BibTex  entry for LaTeX users is:
 
@@ -75,6 +58,6 @@ A BibTex  entry for LaTeX users is:
     title  = {Efficient Estimation of Bid-Ask Spreads from Open, High, Low, and Close Prices},
     year   = {2021},
     note   = {Available at SSRN}
-    url    = {https://ssrn.com/abstract=3892335}
+    url    = {https://www.ssrn.com/abstract=3892335}
 }
 ```

@@ -4,21 +4,7 @@
 \alias{OHLC}
 \title{OHLC Estimators}
 \usage{
-OHLC(x, width = nrow(x), method = "OHLC.CHLO", na.rm = FALSE, trim = 0)
-}
-\arguments{
-\item{x}{\code{xts} object with columns named \code{Open}, \code{High}, \code{Low}, \code{Close}, representing OHLC prices.}
-
-\item{width}{integer width of the rolling window to use, or vector of endpoints defining the intervals to use.}
-
-\item{method}{one of \code{"O"}, \code{"OC"}, \code{"OHL"}, \code{"OHLC"}, \code{"C"}, \code{"CO"}, \code{"CHL"}, \code{"CHLO"}, or any combination of them, e.g. \code{"OHLC.CHLO"}.}
-
-\item{na.rm}{a \code{logical} value indicating whether \code{NA} values should be stripped before the computation proceeds.}
-
-\item{trim}{the fraction (0 to 0.5) of observations to be trimmed from each end before the spread is computed. Values of trim outside that range are taken as the nearest endpoint.}
-}
-\value{
-Time series of spread estimates.
+OHLC(x, width = nrow(x), method, sign, na.rm)
 }
 \description{
 OHLC Estimators
