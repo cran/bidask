@@ -1,4 +1,4 @@
-fc73618ed2ae205d51bd8931320b849a *DESCRIPTION
+1ba4a9cf29c5c8c57138f049e24278f6 *DESCRIPTION
 2786ab6365b152c48e682d646eeefe63 *NAMESPACE
 abc8dc0f934c00aa85ce64dd52d7f52d *R/ar.R
 b1ea9e60da7c041695c0f9f34b33ed21 *R/cs.R
@@ -14,7 +14,7 @@ adc5619df9528b4cfc35546ed091c7eb *README.md
 ea1fdfbd3ca070e28d201c300c4bea8f *inst/CITATION
 f33e4a8378c82e436e6e0718362b6293 *inst/doc/bidask.R
 b3f9f939c4cf5d1c0bd4d1faba343b3f *inst/doc/bidask.Rmd
-26d8abfdbb12b7c4c6d4f8f6f51cd4e9 *inst/doc/bidask.html
+146da17f1de6f886750472e4f2ee1dfb *inst/doc/bidask.html
 19c73c5a06313ac8bdcadafc5909f77b *inst/extdata/msft.csv
 e04e9972b2599a0da506d97f6020df16 *man/AR.Rd
 d25532d39794f46411fe8ae84b6b16fb *man/CS.Rd
@@ -27,5 +27,5 @@ beefc7b88a0f56f3dea8e80cd3948f05 *man/rsum.Rd
 944bc3f7c230484434374689ff8f77f5 *man/sim.Rd
 3797eddce70e59c964648d9d9d95c569 *man/spread.Rd
 5cb70caf0610a431bccc884053fb6b94 *tests/testthat.R
-eed5261143034afac2a1791f0ea59f6f *tests/testthat/test-edge.R
+1c46f9b02fcc232907c2f747344e30c8 *tests/testthat/test-edge.R
 b3f9f939c4cf5d1c0bd4d1faba343b3f *vignettes/bidask.Rmd
