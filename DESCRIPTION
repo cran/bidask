@@ -2,7 +2,7 @@ Package: bidask
 Type: Package
 Title: Efficient Estimation of Bid-Ask Spreads from Open, High, Low,
         and Close Prices
-Version: 2.0.2
+Version: 2.0.4
 Authors@R: c(
     person(given = "Emanuele", family = "Guidotti", email = "emanuele.guidotti@usi.ch", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8961-6623")),
     person(given = "David", family = "Ardia", role = c("ctb"), comment = c(ORCID = "0000-0003-2823-782X")),
@@ -20,15 +20,13 @@ BugReports: https://github.com/eguidotti/bidask/issues
 Encoding: UTF-8
 Imports: xts, zoo
 RoxygenNote: 7.2.3
-Suggests: dplyr, crypto2, quantmod, knitr, rmarkdown, testthat (>=
-        3.0.0)
+Suggests: dplyr, crypto2, quantmod, testthat (>= 3.0.0)
 Config/testthat/edition: 3
-VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-12-15 16:30:07 UTC; eguidotti
+Packaged: 2024-06-14 20:53:08 UTC; eguidotti
 Author: Emanuele Guidotti [aut, cre] (<https://orcid.org/0000-0002-8961-6623>),
   David Ardia [ctb] (<https://orcid.org/0000-0003-2823-782X>),
   Tim Kroencke [ctb] (<https://orcid.org/0000-0001-8700-356X>)
 Maintainer: Emanuele Guidotti <emanuele.guidotti@usi.ch>
 Repository: CRAN
-Date/Publication: 2023-12-17 07:30:02 UTC
+Date/Publication: 2024-06-15 00:30:12 UTC
