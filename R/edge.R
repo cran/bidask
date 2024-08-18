@@ -102,7 +102,7 @@ EDGE <- function(x, width = nrow(x), sign, na.rm){
 #' 
 #' Implements an efficient estimator of bid-ask spreads 
 #' from open, high, low, and close prices as described in 
-#' \href{https://www.ssrn.com/abstract=3892335}{Ardia, Guidotti, & Kroencke (2021)}.
+#' Ardia, Guidotti, & Kroencke (2024).
 #' 
 #' @details
 #' Prices must be sorted in ascending order of the timestamp.
@@ -116,12 +116,12 @@ EDGE <- function(x, width = nrow(x), sign, na.rm){
 #' @return The spread estimate. A value of 0.01 corresponds to a spread of 1\%.
 #'
 #' @note 
-#' Please cite \href{https://www.ssrn.com/abstract=3892335}{Ardia, Guidotti, & Kroencke (2021)} 
+#' Please cite Ardia, Guidotti, & Kroencke (2024)
 #' when using this package in publication.
 #'
 #' @references 
-#' Ardia, D., Guidotti E., & Kroencke T. A. (2021). Efficient Estimation of Bid-Ask Spreads from Open, High, Low, and Close Prices. 
-#' Available at SSRN: \url{https://www.ssrn.com/abstract=3892335}
+#' Ardia, D., Guidotti, E., Kroencke, T.A. (2024). Efficient Estimation of Bid-Ask Spreads from Open, High, Low, and Close Prices. Journal of Financial Economics, 161, 103916. 
+#' \doi{10.1016/j.jfineco.2024.103916}
 #'
 #' @examples
 #' # simulate open, high, low, and close prices with spread 1%
@@ -187,7 +187,7 @@ edge <- function(open, high, low, close, sign = FALSE){
   s2 <- (v2*e1 + v1*e2) / (v1 + v2)
   
   s <- sqrt(abs(s2))
-  if(sign & s2 < 0)
+  if(sign & !is.na(s2) & s2 < 0)
     s <- -s
   
   return(s)
