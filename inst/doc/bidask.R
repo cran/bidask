@@ -1,8 +1,11 @@
 ## ---- include = FALSE---------------------------------------------------------
+data.table::setDTthreads(1)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 6,
+  out.width="100%",
+  dpi = 300,
   warning = FALSE,
   message = FALSE
 )
@@ -10,7 +13,7 @@ knitr::opts_chunk$set(
 ## ----setup--------------------------------------------------------------------
 library(bidask)
 
-## -----------------------------------------------------------------------------
+## ---- results='hide'----------------------------------------------------------
 library(dplyr)
 library(crypto2)
 df <- crypto_list(only_active=TRUE) %>%
@@ -25,14 +28,31 @@ df %>%
   mutate(yyyy = format(timestamp, "%Y")) %>%
   group_by(symbol, yyyy) %>%
   arrange(timestamp) %>%
-  summarise(EDGE = edge(open, high, low, close))
+  summarise("EDGE" = edge(open, high, low, close))
+
+## -----------------------------------------------------------------------------
+library(ggplot2)
+df %>%
+  group_by(symbol) %>%
+  arrange(timestamp) %>%
+  mutate("EDGE (rolling)" = edge_rolling(open, high, low, close, width = 30)) %>%
+  ggplot(aes(x = timestamp, y = `EDGE (rolling)`, color = symbol)) +
+  geom_line() +
+  theme_minimal()
+
+## -----------------------------------------------------------------------------
+df %>%
+  group_by(symbol) %>%
+  arrange(timestamp) %>%
+  mutate("EDGE (expanding)" = edge_expanding(open, high, low, close)) %>%
+  ggplot(aes(x = timestamp, y = `EDGE (expanding)`, color = symbol)) +
+  geom_line() +
+  theme_minimal()
 
 ## -----------------------------------------------------------------------------
 library(quantmod)
 x <- getSymbols("MSFT", auto.assign = FALSE, start = "2019-01-01", end = "2022-12-31")
 head(x)
-
-## -----------------------------------------------------------------------------
 class(x)
 
 ## -----------------------------------------------------------------------------
@@ -57,9 +77,14 @@ x <- read.csv(system.file("extdata", "msft.csv", package = "bidask"))
 x <- xts(x[,-1], order.by = as.POSIXct(x[,1]))
 
 ## -----------------------------------------------------------------------------
+x <- x["T09:30/T16:00"]
 head(x)
 
 ## -----------------------------------------------------------------------------
 sp <- spread(x, width = endpoints(x, on = "day"))
-plot(sp)
+plot(sp, type = "b")
+
+## -----------------------------------------------------------------------------
+sp <- spread(x, width = endpoints(x, on = "day"), method = c("EDGE", "AR", "CS", "ROLL"))
+plot(sp, type = "b", legend.loc = "topright")
 
